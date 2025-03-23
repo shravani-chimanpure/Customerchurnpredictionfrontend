@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Customer Churn Prediction</h2>
+    <form id="churnForm">
+        <input type="text" id="feature1" placeholder="Feature 1" required>
+        <input type="text" id="feature2" placeholder="Feature 2" required>
+        <button type="submit">Predict</button>
+    </form>
+    <h3 id="result"></h3>
+
+    <script>
+        document.getElementById('churnForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const feature1 = document.getElementById('feature1').value;
+            const feature2 = document.getElementById('feature2').value;
+            
+            const response = await fetch('YOUR_NGROK_URL/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ feature1, feature2 })
+            });
+            
+            const data = await response.json();
+            document.getElementById('result').innerText = `Prediction: ${data.prediction}`;
+        });
+    </script>
+</body>
+</html>
